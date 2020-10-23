@@ -2,6 +2,7 @@
 
 # rust 基本语法
 # <a href="https://play.rust-lang.org/">rust在线工具</a>
+# <a href="https://laplacedemon.gitbooks.io/-rust/content/">快学Rust</a>
 # <a href="https://www.runoob.com/rust/rust-tutorial.html">Rust菜鸟教程</a>
 # rust 函数实例
 fn main() {
