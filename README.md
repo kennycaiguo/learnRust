@@ -36,3 +36,35 @@ tuple.0  // -325
 tuple.1  // 4.9
 
 tuple.2  // 22
+# 元组解构赋值 ( destructing ) =
+解构赋值 ( destructing ) 就是把 元组 ( tuple ) 中的每一个元素按照顺序一个一个赋值给变量。
+
+元组解构赋值 ( destructing ) 语法格式
+元组解构赋值 ( destructing ) 的语法格式如下
+
+(age,is_male,cgpa) = (30,true,7.9);
+上面这种赋值操作称之为 元组解构赋值，它会把 等号 ( = ) 右边的元组的元素按照顺序一个一个赋值给等号左边元组里的变量。
+
+赋值完成后，左边的各个变量的值为
+
+age      = 30;
+is_male  = true;
+cgpa     = 7.9;
+解构 操作是 Rust 语言的一个特性，最新的 JavaScript 语言也有解构操作。
+
+范例
+fn main(){
+   let b:(i32,bool,f64) = (30,true,7.9);
+   print(b);
+}
+fn print(x:(i32,bool,f64)){
+   println!("Inside print method");
+   let (age,is_male,cgpa) = x; //assigns a tuple to 
+   distinct variables
+   println!("Age is {} , isMale? {},cgpa is 
+   {}",age,is_male,cgpa);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Inside print method
+Age is 30 , isMale? true,cgpa is 7.9
