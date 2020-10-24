@@ -336,3 +336,17 @@ fn main() {
 
 length of string is 9
 rials
+## 切片实例3 从数组中获取切片并且利用iter()迭代器循环输出切片的元素
+fn main() {
+   let arr=[1,2,3,4,5,6,7];
+   let arrslice=&arr[2..6];
+   for val in arrslice.iter(){
+       println!("value is {}",val);
+   }
+     
+  }
+ ### 结果：
+ value is 3
+value is 4
+value is 5
+value is 6
