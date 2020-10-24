@@ -68,3 +68,69 @@ fn print(x:(i32,bool,f64)){
 
 Inside print method
 Age is 30 , isMale? true,cgpa is 7.9
+
+# Rust 数组的操作
+ fn main() {
+   let arr:[i32;4] = [10,20,30,40];   
+     println!("{:?}",arr);
+    }
+  结果：[10, 20, 30, 40]
+  
+ # 声明和初始化数组
+Rust 语言为数组的声明和初始化提供了 3 中语法
+
+最基本的语法，指定每一个元素的初始值
+
+let variable_name:[dataType;size] = [value1,value2,value3];
+例如
+
+let arr:[i32;4] = [10,20,30,40];
+省略数组类型的语法
+
+因为指定了每一个元素的初始值，所以可以从初始值中推断出数组的类型
+
+let variable_name = [value1,value2,value3];
+例如
+
+fn main() {
+   let arr = [10,20,30,40];   
+     println!("{:?}",arr);
+    }
+  
+指定默认初始值的语法，这种语法有时候称为 默认值初始化。
+
+如果不想为每一个元素指定初始值，则可以为所有元素指定一个默认的初始值。
+
+let variable_name:[dataType;size] = [default_value_for_elements,size];
+例如下面的代码为每一个元素指定初始值为 -1
+fn main() {
+   let arr:[i32;4] = [-1;4];
+     println!("{:?}",arr);
+    }
+  结果：[-1, -1, -1, -1]
+  # Rust 还提供了 len() 方法则用于返回数组的长度，也就是元素的格式。
+
+fn main(){
+   let arr:[i32;4] = [10,20,30,40];
+   println!("array is {:?}",arr);
+   println!("array size is :{}",arr.len());
+}
+编译运行以上 Rust 代码，输出结果如下
+
+array is [10, 20, 30, 40]
+array size is :4
+
+# Rust 利用for循环来遍历输出数组元素
+fn main() {
+   let arr =[10,20,45,60];
+   for i in 0..arr.len(){
+       println!("the {} of arr is {}",i+1,arr[i]);
+    }
+      
+  }
+  结果：
+the 1 of arr is 10
+the 2 of arr is 20
+the 3 of arr is 45
+the 4 of arr is 60
+  
