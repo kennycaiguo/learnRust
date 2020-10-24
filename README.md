@@ -55,7 +55,225 @@ fn main() {
 编译运行以上 Rust 代码，输出结果如下
 
 2 is positive
+# match 语句
+match 语句用于检查 某个当前的值 是否匹配 一组/列值 中的某一个。
 
+如果放到现实生活中，那么 match 语句类似于 老师点名 或者 银行叫号。当老师叫一个名字，比如 小明 时，叫 小明 的那个人就会应答，比如说 到。
+
+如果你会 C 语言，那么 Rust 中的 match 表达式则类似于 C 语言中的 switch 语句。
+
+对 match 语句有了个大概的印象之后，我们来看看 Rust 中的 switch 语句的语法格式
+
+match 语句语法格式
+Rust 中一个基本的 match 语句语法格式如下
+
+match variable_expression {
+   constant_expr1 => {
+      // 语句;
+   },
+   constant_expr2 => {
+      // 语句;
+   },
+   _ => {
+      // 默认
+      // 其它语句
+   }
+};
+match 语句有返回值，它把 匹配值 后执行的最后一条语句的结果当作返回值。
+
+
+let expressionResult = match variable_expression {
+   constant_expr1 => {
+      // 语句;
+   },
+   constant_expr2 => {
+      // 语句;
+   },
+   _ => {
+      // 默认
+      // 其它语句
+   }
+};
+
+## 注意：首先要说明的是 match 关键字后面的表达式不必括在括号中。也就是 variable_expression 不需要用一对 括号(()) 括起来。
+
+其次，match 语句在执行的时候，会计算 variable_expression 表达式的值，然后把计算后的结果和每一个 constant_exprN 匹配，使用的是 全等于 也就是 === 来匹配。如果匹配成功则执行 => {} 里面的语句。
+
+如果 variable_expression 表达式的值没有和任何一个 constant_exprN 匹配，那么它会默认匹配 _。
+
+因此，当没有匹配时，默认会执行 _ => {} 中的语句。
+
+match 语句有返回值，它把 匹配值 后执行的最后一条语句的结果当作返回值。
+
+_ => {} 语句是可选的，也就是说 match 语句可以没有它。
+
+如果只有一条语句，那么每个 constant_expr2 => {} 中的 {} 是可以省略的。
+## match实例
+范例
+看起来 match 语句有点复杂，我们直接拿几个范例来说明下
+
+fn main(){
+   let state_code = "MH";
+   let state = match state_code {
+      "MH" => {println!("Found match for MH"); "Maharashtra"},
+      "KL" => "Kerala",
+      "KA" => "Karnadaka",
+      "GA" => "Goa",
+      _ => "Unknown"
+   };
+   println!("State name is {}",state);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Found match for MH
+State name is Maharashtra
+### 上面的范例中，state_code 对应着语法中的 variable_expression，MH、KL、KA、GA 对应这语法中的 constant_expr1 、constant_expr2 等等。
+
+因为我们的 variable_expression 的值为 MH 和值为 MH 的第一个 constant_expr1 匹配，因此会执行 {println!("Found match for MH"); "Maharashtra"}。 然后将执行的最后一条语句的结果，也就是 "Maharashtra" 作为整个表达式的值返回。
+
+这样，我们的 state 变量就被赋值为 Maharashtra。
+# 上面这个范例是匹配的情况，如果不匹配，那么就会执行 _ => 语句
+
+fn main(){
+   let state_code = "MS";
+   let state = match state_code {
+      "MH" => {println!("Found match for MH"); "Maharashtra"},
+      "KL" => "Kerala",
+      "KA" => "Karnadaka",
+      "GA" => "Goa",
+      _ => "Unknown"
+   };
+   println!("State name is {}",state);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Unknown
+State name is Unknown
+# Rust中的循环
+Rust 语言中也有三种表示 循环 的语句：
+
+loop 语句。一种重复执行且永远不会结束的循环。
+while 语句。一种在某些条件为真的情况下就会永远执行下去的循环。
+for 语句。一种有确定次数的循环。
+三种语句都能实现循环功能，只不过侧重点不一样。
+
+从上面的描述中，根据循环是否可能结束，我们把循环分为两大类
+
+能确定次数的循环，比如 for 循环。
+满足条件就是永动机的循环。比如 while 循环。
+死循环。比如 loop 循环。
+## Rust 中的 for 循环只有 for..in 这种格式（如果数据类型支持迭代，如数组，切片等等，还可以使用iter迭代器）
+ 循环语句的语法格式
+for temp_variable in lower_bound..upper_bound {
+   // action 要重复执行的代码
+}
+lower_bound..upper_bound 用于指定循环区间，是一个左闭又开的区间，比如 1..3 则只有 1 和 2 不包含 3
+
+temp_variable 是循环迭代的每一个元素。
+
+temp_variable 变量的作用域仅限于 for...in 语句，超出则会报错
+## for实例
+fn main(){
+   for x in 1..11{
+      println!("x is {}",x);
+   }
+}
+## while循环
+while 循环
+while 语句是一种只要条件为真就一直会重复执行下去的循环。
+
+while 循环会在每次重复执行前先判断条件是否满足，满足则执行，不满足则退出。
+
+while 语句的语法格式
+while ( condition ) {
+    // action 要重复执行的代码
+}
+condition 是一个表达式，返回的结果会转换为 布尔类型。只要 condition 返回真，那么循环就会一直执行。
+
+范例： 基本的 while 循环
+下面的代码，使用 while 循环重写下上面的代码，重复输出 1 到 11 之间的数字（不包括 11 ）
+
+fn main(){
+   let mut x = 1;
+   while x < 11{
+      println!("inside loop x value is {}",x);
+      x+=1;
+   }
+   println!("outside loop x value is {}",x);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+inside loop x value is 1
+inside loop x value is 2
+inside loop x value is 3
+inside loop x value is 4
+inside loop x value is 5
+inside loop x value is 6
+inside loop x value is 7
+inside loop x value is 8
+inside loop x value is 9
+inside loop x value is 10
+outside loop x value is 11
+看到最后的 outside loop x value is 11 没，因为当 x 递增到 11 就不再满足条件 x < 11 了。
+
+## loop循环
+loop 循环
+loop 语句代表着一种死循环。它没有循环条件，也没有循环次数，它就是一个永动机，只能按ctrl+c强制终止循环或和break结合使用
+我们使用 break 语句改造下我们的 loop 循环，在 x 大于 11 就退出循环。
+
+也就是使用 loop 循环实现 while 循环
+
+fn main(){
+   let mut x = 0;
+   loop {
+      x+=1;
+      if x > 10 {
+        break;
+      }
+      println!("x={}",x);
+   }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+x=1
+x=2
+x=3
+x=4
+x=5
+x=6
+x=7
+x=8
+x=9
+x=10
+
+## 循环控制语句 continue
+break 语句让我们尝到了甜头，有时候我们就会突发奇想，有没有另一个关键字，不像 break 语句那样直接退出整个循环，而仅仅是退出当前循环。也就是剩下的语句不执行了，开始下一个迭代。
+
+创造了那些语言的前辈们，自然也会有这个想法，于是造出了 continue 语句。
+
+continue 语句，简单的说，就是停止执行剩下的语句，直接进入下一个循环。
+## continue范例
+下面的代码，我们使用 for 循环输出 1 到 11 之间的数字，但是跳过数字 5
+
+fn main(){
+    for x in 1..11{
+        if 5 == x {
+            continue;
+        }
+        println!("x is {}",x);
+    }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+x is 1
+x is 2
+x is 3
+x is 4
+x is 6
+x is 7
+x is 8
+x is 9
+x is 10
 # rust 函数实例
 fn main() {
        let x=10;
