@@ -5,6 +5,57 @@
 # <a href="https://laplacedemon.gitbooks.io/-rust/content/">快学Rust</a>
 # <a href="https://www.runoob.com/rust/rust-tutorial.html">Rust菜鸟教程</a>
 # <a href="https://gitee.com/755157298/panda-zoo">rust数据库demo</a>
+# rust条件判断
+我们写一个范例，使用 if 语句来模拟 如果数字大于 0 则输出 正数。
+## 实例1
+fn main(){
+   let num:i32 = 5;
+   if num > 0 {
+      println!("正数");
+   }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+正数
+## 条件实例2
+，使用 if else 语句来判断一个数是否偶数或奇数，如果是偶数则输出 偶数 如果是奇数则输出 奇数
+
+fn main() {
+   let num = 12;
+   if num % 2==0 {
+      println!("偶数");
+   } else {
+      println!("奇数");
+   }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+偶数
+
+## if可以嵌套，但是注意使用嵌套 if 语句，也就是 if...else if... 语句时需要牢记几个点：
+
+任何一个 if 或者嵌套 if 语句可以有 0 个或 1 个 else 语句，但 else 语句必须出现在 if else 后面，也就是出现在最后。
+
+任何一个 if 或者嵌套 if 语句可以有 0 个或多个 if else 语句，但所有的 if else 语句都必须出现在 else 语句之前。
+
+一旦某个 else if 中的条件 boolean_expression1 返回 true，那么后面的 else if 和 else 语句都不会运行。
+## 条件实例3
+我们使用嵌套 if 语句来写一段代码，判断某个值是 大于、小于、等于 0。
+
+fn main() {
+   let num = 2 ;
+   if num > 0 {
+      println!("{} is positive",num);
+   } else if num < 0 {
+      println!("{} is negative",num);
+   } else {
+      println!("{} is neither positive nor negative",num) ;
+   }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+2 is positive
+
 # rust 函数实例
 fn main() {
        let x=10;
