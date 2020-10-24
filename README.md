@@ -5,6 +5,227 @@
 # <a href="https://laplacedemon.gitbooks.io/-rust/content/">快学Rust</a>
 # <a href="https://www.runoob.com/rust/rust-tutorial.html">Rust菜鸟教程</a>
 # <a href="https://gitee.com/755157298/panda-zoo">rust数据库demo</a>
+# Rust 字符串
+Rust 语言提供了两种字符串
+
+字符串字面量 &str。它是 Rust 核心内置的数据类型。
+
+字符串对象 String。它不是 Rust 核心的一部分，只是 Rust 标准库中的一个 公开 pub 结构体。
+
+## 字符串字面量 &str
+字符串字面量 &str 就是在 编译时 就知道其值的字符串类型，是 Rust 语言核心的一部分。
+
+字符串字面量 &str 是字符的集合，被硬编码赋值给一个变量。
+
+let name1 = "你好，简单教程 简单编程";
+字符串字面量的核心代码可以在模块 std::str 中找到，如果你有兴趣，可以阅读一二。
+
+Rust 中的字符串字面量被称之为 字符串切片。因为它的底层实现是 切片。
+
+下面的代码，我们定义了两个字符串字面量 company 和 location
+
+fn main() {
+   let company:&str="简单教程";
+   let location:&str = "中国";
+   println!("公司名 : {} 位于 :{}",company,location);
+}
+## 字符串对象
+字符串对象是 Rust 标准库提供的内建类型。
+
+与字符串字面量不同的是：字符串对象并不是 Rust 核心内置的数据类型，它只是标准库中的一个 公开 pub 的结构体。
+
+字符串对象在标准库中的定义语法如下
+
+pub struct String
+字符串对象是是一个 长度可变的集合，它是 可变 的而且使用 UTF-8 作为底层数据编码格式。
+
+字符串对象在 堆 heap 中分配，可以在运行时提供字符串值以及相应的操作方法。
+
+##创建字符串对象的语法
+要创建一个字符串对象，有两种方法：
+
+一种是创建一个新的空字符串，使用 String::new() 静态方法
+
+String::new()
+另一种是根据指定的字符串字面量来创建字符串对象，使用 String::from() 方法
+
+String::from()
+
+ 范例
+下面，我们分别使用 String::new() 方法和 String::from() 方法创建字符串对象，并输出字符串对象的长度
+
+fn main(){
+   let empty_string = String::new();
+   println!("长度是 {}",empty_string.len());
+
+   let content_string = String::from("简单教程");
+   println!("长度是 {}",content_string.len());
+}
+编译运行以上 Rust 代码，输出结果如下
+
+长度是 0
+长度是 12
+ 
+## 字符串对象常用的方法
+方法	原型	说明
+new()	pub const fn new() -> String	创建一个新的字符串对象
+to_string()	fn to_string(&self) -> String	将字符串字面量转换为字符串对象
+replace()	pub fn replace<'a, P>(&'a self, from: P, to: &str) -> String	搜索指定模式并替换
+as_str()	pub fn as_str(&self) -> &str	将字符串对象转换为字符串字面量
+push()	pub fn push(&mut self, ch: char)	再字符串末尾追加字符
+push_str()	pub fn push_str(&mut self, string: &str)	再字符串末尾追加字符串
+len()	pub fn len(&self) -> usize	返回字符串的字节长度
+trim()	pub fn trim(&self) -> &str	去除字符串首尾的空白符
+split_whitespace()	pub fn split_whitespace(&self) -> SplitWhitespace	根据空白符分割字符串并返回分割后的迭代器
+split()	pub fn split<'a, P>(&'a self, pat: P) -> Split<'a, P>	根据指定模式分割字符串并返回分割后的迭代器。模式 P 可以是字符串字面量或字符或一个返回分割符的闭包
+chars()	pub fn chars(&self) -> Chars	返回字符串所有字符组成的迭代器 
+### 原字符串后追加字符 push()
+如果要在一个字符串后面追加字符则首先需要将该字符串声明为 可变 的，也就是使用 mut 关键字。然后再调用 push() 方法。
+
+push() 是在原字符上追加，而不是返回一个新的字符串
+
+fn main(){
+   let mut company = "简单教程".to_string();
+   company.push('t');
+   println!("{}",company);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+简单教程t
+原字符串后追加字符串 push_str()
+如果要在一个字符串后面追加字符串则首先需要将该字符串声明为 可变 的，也就是使用 mut 关键字。然后再调用 push_str() 方法。
+
+push_str() 是在原字符上追加，而不是返回一个新的字符串
+
+fn main(){
+   let mut company = "简单教程".to_string();
+   company.push_str(" 简单编程");
+   println!("{}",company);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+简单教程 简单编程
+ 
+## trim() 方法实例
+fn main() {
+   let mut mystr=String::from("   i like juicy pussy    ");
+  
+   println!("length of string is :{}",mystr.len());
+     mystr.trim();
+     println!("the new length of string is :{}",mystr.trim().len());
+}
+
+length of string is :25
+the new length of string is :18
+## split_whitespace()实例
+fn main() {
+   let mut mystr=String::from("i like juicy patty");
+   let mut i=1;
+   
+    for part in mystr.split_whitespace(){
+        println!("part {} is :{}",i,part);
+    }
+   
+     
+}
+## split实例
+fn main() {
+   let mut mystr=String::from("i like juicy patty");
+   let mut i=1;
+   
+    for part in mystr.split(" "){
+        println!("part {} is :{}",i,part);
+    }
+   
+     
+}
+## split() 方法最大的缺点是不可重入迭代，也就是迭代器一旦使用，则需要重新调用才可以再用。
+
+但我们可以先在迭代器上调用 collect() 方法将迭代器转换为 向量 Vector ，这样就可以重复使用了。
+
+fn main() {
+   let fullname = "李白，诗仙，唐朝";
+
+   for token in fullname.split("，"){
+      println!("token is {}",token);
+   }
+
+   // 存储在一个向量中
+   println!("\n");
+   let tokens:Vec<&str>= fullname.split("，").collect();
+   println!("姓名 is {}",tokens[0]);
+   println!("称号 {}",tokens[1]);
+   println!("朝代 {}",tokens[2]);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+token is 李白
+token is 诗仙
+token is 唐朝
+
+
+姓名 is 李白
+称号 诗仙
+朝代 唐朝
+
+## 将字符串打散为字符数组 chars()
+如果要将一个字符串打散为所有字符组成的数组，可以使用 chars() 方法。
+
+从某些方面说，如果我们要迭代字符串中的每一个字符，则必须首先将它打散为字符数组，然后才能遍历。
+
+fn main(){
+   let n1 = "简单教程 www.twle.cn".to_string();
+
+   for n in n1.chars(){
+      println!("{}",n);
+   }
+}
+
+字符串连接符 + 的内部实现
+字符串连接符 + 的内部实现，其实是重写了 add() 方法。该方法接受两个参数，第一个参数是当前的字符串对象 self ，也就是 + 左边的字符串，第二个参数是一个 引用，它指向了 + 右边的字符串。
+范例
+下面的代码，我们使用 字符串拼接符 + 将连个字符串变量拼接成一个新的字符串
+
+fn main(){
+   let n1 = "简单教程".to_string();
+   let n2 = "简单编程".to_string();
+
+   let n3 = n1 + &n2; // 需要传递 n2 的引用，注意：这里n1已经是不可用的了，因为方式了所有权转移
+   println!("{}",n3);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+简单教程 简单编程
+## 如果需要将其它类型转换为字符串类型，可以直接调用 to_string() 方法。
+
+例如可以调用一个数字类型的变量的 to_string() 方法将当前变量转换为字符串类型。
+   let number = 2020;
+   let number_as_string = number.to_string(); 
+
+   // 转换数字为字符串类型
+   println!("{}",number_as_string);
+   println!("{}",number_as_string=="2020");
+}
+编译运行以上 Rust 代码，输出结果如下
+
+2020
+true
+
+## 格式化宏 format!
+如果要把不同的变量或对象拼接成一个字符串，我们可以使用 格式化宏 ( format! )
+
+格式化宏 format! 的使用方法如下
+
+fn main(){
+   let n1 = "简单教程".to_string();
+   let n2 = "简单编程".to_string();
+   let n3 = format!("{} {}",n1,n2);
+   println!("{}",n3);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+简单教程 简单编程
+ 
 # rust条件判断
 我们写一个范例，使用 if 语句来模拟 如果数字大于 0 则输出 正数。
 ## 实例1
@@ -648,4 +869,321 @@ fn use_slice(slice:&mut [i32]) {
 [10, 1010, 30, 40, 50]
 从上面的代码中可以看出，只要原数据是可变的，且切片声明时添加了 &mut 关键字，那么切片就是可变更的。
 
+# Rust结构体
+## 范例
+下面的代码，我们定义了一个结构体 Employee ，它有着三个元素/字段，分别是姓名、年龄、公司。
 
+struct Employee {
+   name:String,
+   company:String,
+   age:u32
+}
+
+## 结构体初始化语法
+let instance_name = Name_of_structure {
+   field1:value1,
+   field2:value2,
+   field3:value3
+}; 
+从语法中可以看出，初始化结构体时的等号右边，就是把定义语法中的元素类型换成了具体的值。
+
+结构体初始化，其实就是对 结构体中的各个元素进行赋值。
+
+注意
+千万不要忘记结尾的分号 ;
+范例
+下面的代码，我们定义了一个有三个元素的结构体 Employee，然后初始化一个实例 emp1，最后通过 元素访问符 来访问 emp1 的三个元素。
+
+struct Employee {
+   name:String,
+   company:String,
+   age:u32
+}
+
+fn main() {
+   let emp1 = Employee {
+      company:String::from("TutorialsPoint"),
+      name:String::from("Mohtashim"),
+      age:50
+   };
+   println!("Name is :{} company is {} age is {}",emp1.name,emp1.company,emp1.age);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Name is :Mohtashim company is TutorialsPoint age is 50
+## 修改结构体实例
+修改结构体实例就是对结构体的个别元素 重新赋值。
+
+结构体实例默认是 不可修改的，因为结构体实例也是一个使用 let 定义的变量。
+
+如果要修改结构体实例，就必须在创建时添加 mut 关键字，让它变成可修改的。
+范例
+下面的范例给 Employee 的实例 emp1 添加了 mut 关键字，因此我们可以修改 emp1 的内部元素。
+
+struct Employee {
+   name:String,
+   company:String,
+   age:u32
+}
+
+let mut emp1 = Employee {
+   company:String::from("TutorialsPoint"),
+   name:String::from("Mohtashim"),
+   age:50
+};
+emp1.age = 40;
+println!("Name is :{} company is {} age is 
+{}",emp1.name,emp1.company,emp1.age);
+编译运行以上 Rust 代码，输出结果如下
+
+Name is :Mohtashim company is TutorialsPoint age is 40
+## 结构体作为函数的参数
+结构体的用途之一就是可以作为参数传递给函数。
+
+定一个结构体参数和定义其它类型的参数的语法是一样的。我们这里就不多介绍了，直接看范例
+
+下面的代码定义了一个函数 display ，它接受一个 Employee 结构体实例作为参数并输出结构体的所有元素
+
+fn display( emp:Employee) {
+   println!("Name is :{} company is {} age is 
+   {}",emp.name,emp.company,emp.age);
+}
+完整的可运行的实例代码如下
+
+//定义一个结构体
+struct Employee {
+   name:String,
+   company:String,
+   age:u32
+}
+fn main() {
+   //初始化结构体
+   let emp1 = Employee {
+      company:String::from("TutorialsPoint"),
+      name:String::from("Mohtashim"),
+      age:50
+   };
+   let emp2 = Employee{
+      company:String::from("TutorialsPoint"),
+      name:String::from("Kannan"),
+      age:32
+   };
+   //将结构体作为参数传递给 display
+   display(emp1);
+   display(emp2);
+}
+
+// 使用点号(.) 访问符访问结构体的元素并输出它么的值
+fn display( emp:Employee){
+   println!("Name is :{} company is {} age is 
+   {}",emp.name,emp.company,emp.age);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Name is :Mohtashim company is TutorialsPoint age is 50
+Name is :Kannan company is TutorialsPoint age is 32
+## 结构体实例作为函数的返回值
+Rust 中的结构体不仅仅可以作为函数的参数，还可以作为 函数的返回值。
+
+函数返回结构体实例需要实现两个地方：
+
+在 箭头 -> 后面指定结构体作为一个返回参数。
+在函数的内部返回 结构体的实例
+结构体实例作为函数的返回值的语法格式
+struct My_struct {}
+
+fn function_name([parameters]) -> My_struct {
+   // 其它的函数逻辑
+   return My_struct_instance;
+}
+范例
+下面的代码，我们首先定义一个结构体 Employee ，接着定义一个方法 who_is_elder ，传入两个结构体 Employee 作为参数并返回年龄个大的那个。
+
+fn main() {
+
+   let emp1 = Employee{
+      company:String::from("TutorialsPoint"),
+      name:String::from("Mohtashim"),
+      age:50
+   };
+   let emp2 = Employee {
+      company:String::from("TutorialsPoint"),
+      name:String::from("Kannan"),
+      age:32
+   };
+   let elder = who_is_elder(emp1,emp2);
+   println!("elder is:");
+
+   display(elder);
+}
+
+//接受两个 Employee 的实例作为参数并返回年长的那个
+fn who_is_elder (emp1:Employee,emp2:Employee)->Employee {
+   if emp1.age>emp2.age {
+      return emp1;
+   } else {
+      return emp2;
+   }
+}
+
+// 显示结构体的所有元素
+fn display( emp:Employee) {
+   println!("Name is :{} company is {} age is {}",emp.name,emp.company,emp.age);
+}
+
+// 定义一个结构体
+struct Employee {
+   name:String,
+   company:String,
+   age:u32
+}
+编译运行以上 Rust 代码，输出结果如下
+
+elder is:
+Name is :Mohtashim company is TutorialsPoint age is 50
+
+## 结构体中的方法
+Rust 中的结构体可以定义 方法 ( method )。
+
+方法 ( method ) 是一段代码的 逻辑组合，用于完成某项特定的任务或实现某项特定的功能。
+
+方法（ method ） 和 函数（ function） 有什么不同之处呢？
+
+简单的说：
+
+函数（ function） 没有属主，也就是归属于谁，因此可以直接调用。
+方法（ method ） 是有属主的，调用的时候必须指定 属主。
+函数（ function） 没有属主，同一个程序不可以出现两个相同签名的函数。
+方法（ method ） 有属主，不同的属主可以有着相同签名的方法。
+定义方法时需要使用 fn 关键字。
+
+fn 关键字是 function 取头尾两个字母的缩写。
+
+结构体方法的 作用域 仅限于 结构体内部。
+
+与 C++ 语言 中的结构体的方法不同的是，Rust 中的结构体方法只能定义在结构体的外面。
+
+在定义结构体方法时需要使用 impl 关键字，语法格式如下
+
+struct My_struct {}
+
+impl My_struct { 
+   // 属于结构体的所有其它代码
+}
+impl 关键字最重要的作用，就是定义上面我们所说的 方法的属主。所有被 impl My_struct 块包含的代码，都只属于 My_struct 这个结构。
+
+impl 关键字是 implement 的前 4 个字母的缩写。意思是 实现。
+
+结构体的普通方法（后面我们还会学到其它方法）时，第一个参数永远是 &self 关键字。self 是 自我 的意思，&self 永远表示着当前的结构体的一个实例。
+
+这是不是可以带来其它的结构体方法的解释：结构体的方法就是用来操作当前结构体的一个实例的。
+
+## 结构体方法的定义语法
+定义结构体方法的语法格式如下
+
+struct My_struct {}
+impl My_struct { 
+
+   // 定义一个结构体的普通方法
+   fn method_name(&self[,other_parameters]) { 
+      //方法的具体逻辑代码
+   }
+
+}
+&self 是结构体普通方法固定的第一个参数，其它参数则是可选的。
+
+即使结构体方法不需要传递任何参数，&self 也是固定的，必须存在的。
+
+##结构体方法内部访问结构体元素
+因为我们在定义方法时固定传递了 &self 关键字。而 &self 关键字又代表了当前方法的属主。
+
+因此我们可以在方法内部使用 self. 来访问结构体的元素。
+## 范例
+下面的代码，我们首先定义了一个结构体 Rectangle 用于表示一个 长方形，它有宽高 两个元素 width 和 height。
+
+然后我们又为 结构体 Rectangle 定义了一个方法 area 用于计算当前 长方形实例 的面积。
+
+// 定义一个长方形结构体
+struct Rectangle {
+   width:u32, height:u32
+}
+
+// 为长方形结构体定义一个方法，用于计算当前长方形的面积
+impl Rectangle {
+   fn area(&self)->u32 {
+      // 在方法内部，可以使用点号 `self.` 来访问当前结构体的元素。use the . operator to fetch the value of a field via the self keyword
+      self.width * self.height
+   }
+}
+
+fn main() {
+   // 创建 Rectangle 结构体的一个实例
+   let small = Rectangle {
+      width:10,
+      height:20
+   };
+
+   //计算并输出结构体的面积
+   println!("width is {} height is {} area of Rectangle 
+   is {}",small.width,small.height,small.area());
+}
+编译运行以上 Rust 代码，输出结果如下
+
+width is 10 height is 20 area of Rectangle is 200
+
+## 结构体的静态方法
+Rust 中的结构体还可以有静态方法。
+
+静态方法可以直接通过结构体名调用而无需先实例化。
+
+结构体的静态方法定义方式和普通方法类似，唯一的不同点是 不需要使用 &self 作为参数。
+### 定义静态方法的语法
+结构体静态方法的定义语法格式如下
+
+impl Structure_Name {
+
+   // Structure_Name 结构体的静态方法
+   fn method_name(param1: datatype, param2: datatype) -> return_type {
+      // 方法内部逻辑
+   }
+
+}
+静态方法和其它普通方法一样，参数是可选的。也就是可以没有参数
+
+调用静态方法的语法
+静态方法可以直接通过结构体名调用，而无需先实例化。
+
+结构体的静态方法需要使用 structure_name:: 语法来访问，详细的语法格式如下
+
+structure_name::method_name(v1,v2)
+范例
+下面的范例，我们为结构体 Point 定义了一个静态方法 getInstance()。
+
+getInstance() 是一个 工厂方法，它初始化并返回结构体 Point 的实例。
+
+//声明结构体 Point
+struct Point {
+   x: i32,
+   y: i32,
+}
+
+impl Point {
+   // 用于创建 Point 实例的静态方法
+   fn getInstance(x: i32, y: i32) -> Point {
+      Point { x: x, y: y }
+   }
+   // 用于显示结构体元素的普通方法
+   fn display(&self){
+      println!("x ={} y={}",self.x,self.y );
+   }
+}
+fn main(){
+
+   // 调用静态方法
+   let p1 = Point::getInstance(10,20);
+   p1.display();
+
+}
+编译运行以上 Rust 代码，输出结果如下
+
+x =10 y=20
