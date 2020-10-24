@@ -194,3 +194,48 @@ fn main(){
 
 [10, 0, 30, 40]
 
+# 数组作为函数参数
+数组可以作为函数的参数。而传递方式有 传值传递 和 引用传递 两种方式。
+
+传值传递 就是传递数组的一个副本给函数做参数，函数对副本的任何修改都不会影响到原来的数组。
+
+引用传递 就是传递数组在内存上的位置给函数做参数，因此函数对数组的任何修改都会影响到原来的数组。
+
+## 范例：传值传递
+下面的代码，我们使用传值方式将数组传递给函数做参数。函数对参数的任何修改都不会影响到原来的数组。
+
+fn main() {
+   let arr = [10,20,30];
+   update(arr);
+
+   println!("Inside main {:?}",arr);
+}
+fn update(mut arr:[i32;3]){
+   for i in 0..3 {
+      arr[i] = 0;
+   }
+   println!("Inside update {:?}",arr);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Inside update [0, 0, 0]
+Inside main [10, 20, 30]
+
+## 范例2: 引用传递
+下面的代码，我们使用引用方式将数组传递给函数做参数。函数对参数的任何修改都会影响到原来的数组
+
+fn main() {
+   let mut arr = [10,20,30];
+   update(&mut arr);
+   println!("Inside main {:?}",arr);
+}
+fn update(arr:&mut [i32;3]){
+   for i in 0..3 {
+      arr[i] = 0;
+   }
+   println!("Inside update {:?}",arr);
+}
+编译运行以上 Rust 代码，输出结果如下
+
+Inside update [0, 0, 0]
+Inside main [0, 0, 0]
