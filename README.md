@@ -15,3 +15,11 @@ fn main() {
 fn add(x:i32,y:i32) -> i32{ //rust中用->i32表示函数返回值，函数可以在调用语句后面声明
     return x+y;
 }  
+# rust元组的基本使用
+
+fn main() {
+   let tup=(1,"hello",12.2);
+     
+     println!("{:?}",tup); //输出元组所有元素需要用到{:?}占位符
+    }
+  
