@@ -133,4 +133,64 @@ the 1 of arr is 10
 the 2 of arr is 20
 the 3 of arr is 45
 the 4 of arr is 60
-  
+
+# 迭代数组 iter()
+我们可以使用 iter() 函数为数组生成一个迭代器。
+
+然后就可以使用 for in 语法来迭代数组。
+
+fn main(){
+
+let arr:[i32;4] = [10,20,30,40];
+   println!("array is {:?}",arr);
+   println!("array size is :{}",arr.len());
+
+   for val in arr.iter(){
+      println!("value is :{}",val);
+   }
+}
+编译运行以上 Rust 代码，输出结果如下
+
+array is [10, 20, 30, 40]
+array size is :4
+value is :10
+value is :20
+value is :30
+value is :40
+
+# 可变数组,也就是元素的值可以改变
+使用 let 声明的变量，默认是只读的，数组也不例外。也就是说，默认情况下，数组是不可变的。
+
+fn main(){
+   let arr:[i32;4] = [10,20,30,40];
+   arr[1] = 0;
+   println!("{:?}",arr);
+}
+上面的代码运行会出错，错误信息如下
+
+error[E0594]: cannot assign to `arr[_]`, as `arr` is not declared as mutable
+ --> src/main.rs:3:4
+  |
+2 |    let arr:[i32;4] = [10,20,30,40];
+  |        --- help: consider changing this to be mutable: `mut arr`
+3 |    arr[1] = 0;
+  |    ^^^^^^^^^^ cannot assign
+
+error: aborting due to previous error
+数组的不可变，表现为两种形式：变量不可重新赋值为其它数组、数组的元素不可以修改。
+
+如果要让数组的元素可以修改，就需要添加 mut 关键字。例如
+
+let mut arr:[i32;4] = [10,20,30,40];
+
+我们将刚刚错误的代码修改下
+
+fn main(){
+   let mut arr:[i32;4] = [10,20,30,40];
+   arr[1] = 0;
+   println!("{:?}",arr);
+}
+就可以正常运行，输出结果如下
+
+[10, 0, 30, 40]
+
