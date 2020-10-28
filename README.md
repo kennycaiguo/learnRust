@@ -252,6 +252,13 @@ fn main() {
 编译运行以上 Rust 代码，输出结果如下
 
 偶数
+## if条件实例3
+fn main() {
+    let a = 3;
+    let number = if a > 0 { 1 } else { -1 };
+    println!("number 为 {}", number);
+}
+
 
 ## if可以嵌套，但是注意使用嵌套 if 语句，也就是 if...else if... 语句时需要牢记几个点：
 
