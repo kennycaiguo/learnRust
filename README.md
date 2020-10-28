@@ -446,7 +446,20 @@ outside loop x value is 11
 
 ## loop循环
 loop 循环
-loop 语句代表着一种死循环。它没有循环条件，也没有循环次数，它就是一个永动机，只能按ctrl+c强制终止循环或和break结合使用
+loop 语句代表着一种死循环。它没有循环条件，也没有循环次数，它就是一个永动机，只能按ctrl+c强制终止循环或和break结合使用，
+### loop循环实例1
+fn main() {
+     let mut countr=0;
+    let result = loop {
+        countr+=1;
+        if countr==20{
+            break countr*2 //终止循环并且将countr的值乘于2返回
+        }
+    };
+    println!("result={}",result);
+}
+结果：result=40
+
 我们使用 break 语句改造下我们的 loop 循环，在 x 大于 11 就退出循环。
 
 也就是使用 loop 循环实现 while 循环
