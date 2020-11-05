@@ -5,6 +5,58 @@
 # <a href="https://laplacedemon.gitbooks.io/-rust/content/">快学Rust</a>
 # <a href="https://www.runoob.com/rust/rust-tutorial.html">Rust菜鸟教程</a>
 # <a href="https://gitee.com/755157298/panda-zoo">rust数据库demo</a>
+# rust 格式化输出
+格式化输出
+打印操作由 std::fmt 里面所定义的一系列宏来处理，包括：
+
+format!：将格式化文本写到字符串（String）。（译注：字符串是返 回值不是参数。）
+print!：与 format! 类似，但将文本输出到控制台（io::stdout）。
+println!: 与 print! 类似，但输出结果追加一个换行符。
+eprint!：与 format! 类似，但将文本输出到标准错误（io::stderr）。
+eprintln!：与 eprint! 类似，但输出结果追加一个换行符。
+这些宏都以相同的做法解析（parse）文本。另外有个优点是格式化的正确性会在编译时检查。
+## 例子：
+fn main() {
+    // 通常情况下，`{}` 会被任意变量内容所替换。
+    // 变量内容会转化成字符串。
+    println!("{} days", 31);
+
+    // 不加后缀的话，31 就自动成为 i32 类型。
+    // 你可以添加后缀来改变 31 的类型。
+
+    // 用变量替换字符串有多种写法。
+    // 比如可以使用位置参数。
+    println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
+
+    // 可以使用命名参数。
+    println!("{subject} {verb} {object}",
+             object="the lazy dog",
+             subject="the quick brown fox",
+             verb="jumps over");
+
+    // 可以在 `:` 后面指定特殊的格式。
+    println!("{} of {:b} people know binary, the other half don't", 1, 2);
+
+    // 你可以按指定宽度来右对齐文本。
+    // 下面语句输出 "     1"，5 个空格后面连着 1。
+    println!("{number:>width$}", number=1, width=6);
+
+    // 你可以在数字左边补 0。下面语句输出 "000001"。
+    println!("{number:>0width$}", number=1, width=6);
+
+    // println! 会检查使用到的参数数量是否正确。
+    println!("My name is {0}, {1} {0}", "Bond"，"James");
+    // 改正 ^ 补上漏掉的参数："James"
+
+    // 创建一个包含单个 `i32` 的结构体（structure）。命名为 `Structure`。
+    #[allow(dead_code)]
+    struct Structure(i32);
+
+    // 但是像结构体这样的自定义类型需要更复杂的方式来处理。
+    // 下面语句无法运行。
+    println!("This struct `{}` won't print...", Structure(3));
+    // 改正 ^ 注释掉此行。
+}
 
 # Rust 字符串
 Rust 语言提供了两种字符串
@@ -1224,3 +1276,40 @@ fn main(){
 编译运行以上 Rust 代码，输出结果如下
 
 x =10 y=20
+
+
+调试（Debug）,利用println！宏输出结构体变量
+所有的类型，若想用 std::fmt 的格式化 trait 打印出来，都要求实现这个 trait。自动的实现只为一些类型提供，比如 std 库中的类型。所有其他类型 都必须手动实现。
+
+fmt::Debug 这个 trait 使这项工作变得相当简单。所有类型都能推导（derive，即自 动创建）fmt::Debug 的实现。但是 fmt::Display 需要手动实现。
+
+
+
+// 这个结构体不能使用 `fmt::Display` 或 `fmt::Debug` 来进行打印。
+struct UnPrintable(i32);
+
+// `derive` 属性会自动创建所需的实现，使这个 `struct` 能使用 `fmt::Debug` 打印。
+#[derive(Debug)]
+struct DebugPrintable(i32);
+
+## 实例：
+#[derive(Debug)] //如果想利用println！来输出结构体变量，必须在声明结构体前面加这个，否则报错
+struct Person{
+    name:String,
+    age: u32,
+    gender:String,
+}
+fn main() {
+   
+    let name = "Joe".to_string();
+    let age= 20;
+    let gender = "female".to_string();
+    let mut p2 = Person{ //注意，默认是不能遍历结构体的属性的
+        name,
+        age,
+        gender,
+    };
+    println!("{:?}",p2);
+}
+
+
