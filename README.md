@@ -1312,4 +1312,20 @@ fn main() {
     println!("{:?}",p2);
 }
 
-
+### 元组结构体
+ //元组结构体,使用的是（）
+ fn main(){
+ 
+    #[derive(Debug)]
+    struct User(String,String,i32);
+    let u=User("Luis".to_string(),"male".to_string(),26);
+    println!("{:?}",u);
+    println!("name={}",u.0);
+    println!("gender={}",u.1);
+    println!("age={}",u.2);
+}
+结果：
+User("Luis", "male", 26)
+name=Luis
+gender=male
+age=26
