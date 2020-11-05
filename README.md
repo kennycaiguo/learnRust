@@ -1329,3 +1329,24 @@ User("Luis", "male", 26)
 name=Luis
 gender=male
 age=26
+
+# 没有任何字段的结构体(但是可以有方法)
+## 实例
+  //没有任何字段的结构体
+  fn main{
+    struct myStruct{} //这个结构体没有字段但是可以添加方法
+     impl myStruct{
+         fn add(&self,x:i32,y:i32)->i32{ //如果不是静态方法，需要&self，而且在第一位
+          x+y
+      }  //方法之间不需要分隔符
+        fn sub(x:i32,y:i32)->i32{ //静态方法，不需要&self
+            x-y
+        }
+
+     }
+    let x = myStruct{};
+    let res = x.add(10,20);
+    let rs=myStruct::sub(30,10);//调用静态方法
+    println!("result add={}，result sub={}",res,rs);
+    
+    }
