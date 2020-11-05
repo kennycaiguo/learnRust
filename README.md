@@ -5,6 +5,7 @@
 # <a href="https://laplacedemon.gitbooks.io/-rust/content/">快学Rust</a>
 # <a href="https://www.runoob.com/rust/rust-tutorial.html">Rust菜鸟教程</a>
 # <a href="https://gitee.com/755157298/panda-zoo">rust数据库demo</a>
+
 # Rust 字符串
 Rust 语言提供了两种字符串
 
@@ -750,6 +751,22 @@ fn update(arr:&mut [i32;3]){
 Inside update [0, 0, 0]
 Inside main [0, 0, 0]
 # Rust 切片 slice
+## 实例1
+fn main() {
+    let s="Hello, World!";
+    //let s1 = &s[0..5]; //获取切片s1，注意：是包头不包尾
+   // let s1 = &s[0..=4]; //获取切片s1，这样子就可以包尾
+    let s1 = &s[..=4]; //获取切片s1，这样子就可以包尾，这样子写表示从0开始
+    //let s2 = &s[6..12];//
+    let s2 = &s[6..];//这样子也行
+    let s3 = &s[..];//这个表示将整个字符串作为切片
+    println!("s1={}",s1);
+    println!("s2={}",s2);
+    println!("s3={}",s3);
+    let mut str1 = s1.to_string();
+    str1.push_str(s2);
+    println!("str1={}",str1);
+}
 一个 切片（ slice ） 就是指向一段 内存 的指针。
 
 因此 切片 可用于访问内存块中 连续区间内的数据。
