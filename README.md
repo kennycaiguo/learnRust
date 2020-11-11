@@ -1350,3 +1350,62 @@ age=26
     println!("result add={}，result sub={}",res,rs);
     
     }
+# rust语言枚举
+实例1
+/*#[derive(Debug)]
+enum Week{
+    Mon,Tues,Wed,Thur,Fri,Sat,Sun
+}*/
+//c语言风格
+#[derive(Debug)]
+enum IpAddKind{
+    v4,
+    v6,
+}
+
+#[derive(Debug)]
+struct IpAddr{
+    kind:IpAddKind,
+    address:String,
+}
+enum Message{
+    Quit,
+    Move{x: i32,y: i32},
+    Write(String),
+    Change(i32,i32,i32),
+}
+/*
+等同于：
+struct QuitMessage
+struct MoveMessage{x: i32,y: i32,}
+struct WriteMessage(String)
+struct Change(i32,i32,i32)
+
+*/
+//枚举类型定义方法和结构体类似，也是用impl
+//match的语法
+impl Message{
+    fn Print(&self){
+        match *self {
+            Message::Quit => println!("Quit Invoked..."),
+            Message::Move{x, y} => println!("Move x={},y={}", x, y),
+            Message::Change(x, y, z) => println!("Change x={},y={},z={}", x, y, z),
+            _ => println!("Write"),
+        };
+    }
+}
+
+fn main() {
+     /*let ip1 = IpAddr{
+         kind:IpAddKind::v4,
+         address:"192.168.1.100".to_string()
+     };
+    println!("ip1={:?}",ip1);
+    */
+    let q = Message::Quit;
+    q.Print();
+    let m = Message::Move { x: 10, y: 20};
+    m.Print();
+    let c =Message::Change(5,6,7);
+    c.Print();
+}
